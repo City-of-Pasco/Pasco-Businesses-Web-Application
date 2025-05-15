@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Business Directory</title>
   <meta name="author" content="" />
   <link rel="stylesheet" href="css/style.css" />
+
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -35,45 +39,51 @@
       </nav>
     </header>
 
-    <main>
-      <section class="directory-grid">
-        <div class="business-card">
-          <img src="assets/images/Andys North.jpg" alt="Andy's North" />
-          <h3>Andy's North</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
 
-        <div class="business-card">
-          <img src="assets/images/el charrito.jpg" alt="El Charrito Mexican Restaurant" />
-          <h3>El Charrito Mexican Restaurant</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
+    <div id="map"></div>
 
-        <div class="business-card">
-          <img src="assets/images/fiesta mexican restaurant .jpg" alt="Fiesta Mexican Restaurant" />
-          <h3>Fiesta Mexican Restaurant</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
 
-        <div class="business-card">
-          <img src="assets/images/image 17.jpg" alt="Placeholder Business 1" />
-          <h3>Placeholder Business 1</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYXplZW0yNCIsImEiOiJjbG9vdTBocXgwMXQ2MmtuMDNxdnZ6dmE4In0.rdbtfSrMciEPOWUtqb0oVA';
 
-        <div class="business-card">
-          <img src="assets/images/image 18.jpg" alt="Placeholder Business 2" />
-          <h3>Placeholder Business 2</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/azeem24/cmamtp71d016o01rfgf9z4yfk',
+    center: [-119.094, 46.2355],
+    zoom: 14.2,
+    interactive: false
+  });
 
-        <div class="business-card">
-          <img src="assets/images/image 19.jpg" alt="Placeholder Business 3" />
-          <h3>Placeholder Business 3</h3>
-          <a href="#" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
-      </section>
-    </main>
+  map.on('load', () => {
+    // Add GeoJSON source
+    map.addSource('downtownPasco', {
+      type: 'geojson',
+      data: 'assets/downtownPasco.geojson'
+    });
+
+    // Add fill layer
+    map.addLayer({
+      id: 'downtownPasco-fill',
+      type: 'fill',
+      source: 'downtownPasco',
+      paint: {
+        'fill-color': '#d9d9d9',
+        'fill-opacity': 0.4
+      }
+    });
+
+    // // Optional: Add outline
+    // map.addLayer({
+    //   id: 'downtownPasco-outline',
+    //   type: 'line',
+    //   source: 'downtownPasco',
+    //   paint: {
+    //     'line-color': '#FF6600',
+    //     'line-width': 2
+    //   }
+    // });
+  });
+</script>
   </div>
 
   <footer class="contact-container-full">
@@ -98,10 +108,12 @@
         <ul>
           <li><a href="https://www.pasco-wa.gov/1012/Departments">City Department Directory</a></li>
           <li><a href="https://www.pasco-wa.gov/CivicAlerts.aspx?CID=16">Public Notices</a></li>
-          <li><a href="https://www.pasco-wa.gov/313/Emergency-PreparednessPublic-Safety">Emergency Preparedness & Contacts</a></li>
+          <li><a href="https://www.pasco-wa.gov/313/Emergency-PreparednessPublic-Safety">Emergency Preparedness &
+              Contacts</a></li>
         </ul>
       </div>
     </div>
   </footer>
 </body>
+
 </html>
