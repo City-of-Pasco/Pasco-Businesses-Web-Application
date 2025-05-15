@@ -41,9 +41,15 @@
       </section>
 
       <section class="events-filter">
-        <div class="filter-options">
-          <button class="filter-btn active" data-filter="all">All Events</button>
-          <button class="filter-btn" data-filter="saved">Saved</button>
+        <div class="filter-header">
+          <div class="sort-and-filters">
+            <button class="filter-btn active" data-filter="all">All Events</button>
+            <select id="sort-filter" class="sort-dropdown">
+              <option value="latest">Latest to Earliest</option>
+              <option value="earliest">Earliest to Latest</option>
+            </select>
+            <button class="filter-btn" data-filter="saved">Saved</button>
+          </div>
         </div>
       </section>
 
@@ -70,7 +76,7 @@
       <section class="event-submit">
         <h2>Showcase Your Own Event</h2>
         <p>Want to be featured here? Submit your event to be verified.</p>
-        <a href="https://docs.google.com/forms/d/1U_snSatg6z0GuYQSzLriCqK5HrZljCExzbAljDaY2gY/viewform?pli=1&pli=1&edit_requested=true#responses" 
+        <a href="https://arcg.is/1nTibG1" 
            target="_blank" 
            class="form-button">
           Submit an Event
@@ -105,6 +111,17 @@
     </div>
   </footer>
 
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close" class="modal-close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-datetime"></p>
+      <p id="modal-location"></p>
+      <p id="modal-description"></p>
+      <p id="modal-website"></p>
+    </div>
+  </div>
+  
   <script src="assets/js/events.js"></script>
 </body>
 </html>
