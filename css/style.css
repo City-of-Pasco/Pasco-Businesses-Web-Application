@@ -393,12 +393,22 @@ nav a:hover,
     align-items: center;
 }
 
+/* Save button icons */
+.save-btn i {
+  margin-right: 0.5rem;
+}
+
+.save-btn.saved i {
+  color: #d4af37;
+}
+
 .save-btn {
     background: none;
     border: none;
     color: #789DAF;
     cursor: pointer;
     font-family: 'Aktiv Grotesk RG', sans-serif;
+    font-size: 15px;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -541,15 +551,6 @@ nav a:hover,
 
 .error-message {
     color: #d9534f;
-}
-
-/* Save button icons */
-.save-btn i {
-    margin-right: 0.5rem;
-}
-
-.save-btn.saved i {
-    color: #d4af37;
 }
 
 /* kitchen rent page */
