@@ -78,11 +78,16 @@ function applyDateSort() {
 
   const now = new Date();
 
-  // filter out events that have already ended
   const filtered = allFeatures.filter(feature => {
-    const endDateStr = feature.properties.end_event_date;
-    const endDate = endDateStr ? new Date(endDateStr) : null;
-    return !endDate || endDate >= now; 
+    const { end_event_date, end_time } = feature.properties;
+
+    if (!end_event_date) return true;
+
+    const [hour, minute] = (end_time || '23:59').split(':');
+    const endDateTime = new Date(end_event_date);
+    endDateTime.setHours(+hour, +minute, 0, 0);
+
+    return endDateTime > now;
   });
 
   const sorted = filtered.sort((a, b) => {
@@ -106,6 +111,7 @@ function applyDateSort() {
     container.appendChild(card);
   });
 }
+
 
 
 // Create event card
