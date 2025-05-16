@@ -3,13 +3,14 @@ let allFeatures = [];
 document.addEventListener('DOMContentLoaded', function () {
   const SURVEY_LAYER_URL =
     'https://services1.arcgis.com/mBduYxVcr3cUuRe8/arcgis/rest/services/survey123_f44001fc67e242ee84ee0bb029a4011a/FeatureServer/0';
-  const QUERY_URL = `${SURVEY_LAYER_URL}/query?where=verify='yes'&outFields=OBJECTID,event_title,event_description,event_date,start_time,end_time,event_location,websiteadditional_links&f=geojson`;
+    const QUERY_URL = `${SURVEY_LAYER_URL}/query?where=verify='yes'&outFields=OBJECTID,event_title,event_description,event_date,end_event_date,start_time,end_time,event_location,websiteadditional_links&f=geojson`;
+
 
   fetch(QUERY_URL)
     .then((response) => response.json())
     .then((data) => {
       allFeatures = data.features || [];
-      applyDateSort(); // Initial render
+      applyDateSort();
     })
     .catch((error) => {
       console.error('Error loading events:', error);
@@ -75,7 +76,16 @@ function applyDateSort() {
   const container = document.getElementById('events-container');
   container.innerHTML = '';
 
-  const sorted = [...allFeatures].sort((a, b) => {
+  const now = new Date();
+
+  // filter out events that have already ended
+  const filtered = allFeatures.filter(feature => {
+    const endDateStr = feature.properties.end_event_date;
+    const endDate = endDateStr ? new Date(endDateStr) : null;
+    return !endDate || endDate >= now; 
+  });
+
+  const sorted = filtered.sort((a, b) => {
     const dateA = new Date(a.properties.event_date);
     const dateB = new Date(b.properties.event_date);
     return sortOrder === 'latest' ? dateB - dateA : dateA - dateB;
@@ -84,33 +94,55 @@ function applyDateSort() {
   sorted.forEach((feature) => {
     const props = feature.properties;
     const card = createEventCard(
-      formatDate(props.event_date),
-      to12Hour(props.start_time),
-      to12Hour(props.end_time),
+      props.event_date,
+      props.end_event_date,
+      props.start_time,
+      props.end_time,
       props.event_title,
       props.event_description,
       props.event_location,
       props.websiteadditional_links
-    );
+    );        
     container.appendChild(card);
   });
 }
 
+
 // Create event card
-function createEventCard(date, startTime, endTime, title, description, location, website) {
+function createEventCard(startDateStr, endDateStr, startTime, endTime, title, description, location, website) {
   const card = document.createElement('div');
   card.className = 'event-card';
   card.dataset.saved = 'false';
 
-  const shortDescription = description.split('. ')[0] + (description.length > 80 ? '...' : '');
-  const timeString = startTime && endTime ? `${startTime} – ${endTime}` : 'Time TBD';
+  // Format the dates
+  const startDate = startDateStr ? new Date(startDateStr) : null;
+  const endDate = endDateStr ? new Date(endDateStr) : null;
+
+  const dateString = (() => {
+    if (!startDate) return 'Date TBD';
+    if (!endDate || startDate.toDateString() === endDate.toDateString()) {
+      return startDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    const sameMonth = startDate.getMonth() === endDate.getMonth();
+    const sameYear = startDate.getFullYear() === endDate.getFullYear();
+
+    if (sameMonth && sameYear) {
+      return `${startDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric' })} – ${endDate.getDate()}, ${endDate.getFullYear()}`;
+    } else if (sameYear) {
+      return `${startDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric' })} – ${endDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}`;
+    } else {
+      return `${startDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })} – ${endDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}`;
+    }
+  })();
+
+  const timeString = startTime && endTime ? `${to12Hour(startTime)} – ${to12Hour(endTime)}` : 'Time TBD';
+  const shortDescription = description?.split('. ')[0] + (description?.length > 80 ? '...' : '');
 
   card.innerHTML = `
     <h3 class="event-title">${title}</h3>
     <div class="event-datetime">
-      <span class="event-date">${date}</span>
-      <span class="dot-separator">•</span>
-      <span class="event-time">${timeString}</span>
+      ${dateString} <span class="dot-separator">•</span> ${timeString}
     </div>
     <p class="event-description">${shortDescription}</p>
     <div class="event-actions">
@@ -130,13 +162,13 @@ function createEventCard(date, startTime, endTime, title, description, location,
       : '<i class="fas fa-bookmark"></i> Saved';
   });
 
-  // Open modal
+  // Modal behavior
   card.addEventListener('click', function (e) {
     if (e.target.closest('.save-btn')) return;
 
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-datetime').innerHTML = `
-      <span class="modal-date">${date}</span>
+      <span class="modal-date">${dateString}</span>
       <span class="dot-separator">•</span>
       <span class="modal-time">${timeString}</span>
     `;
@@ -145,29 +177,18 @@ function createEventCard(date, startTime, endTime, title, description, location,
     const modalLocation = document.getElementById('modal-location');
     if (location) {
       const encodedLocation = encodeURIComponent(location);
-      modalLocation.innerHTML = `📍 <a href="https://www.google.com/maps/dir/?api=1&destination=${encodedLocation}" target="_blank" rel="noopener noreferrer" style="color: #000; text-decoration: underline;">${location}</a>`;
+      modalLocation.innerHTML = `📍 <a href="https://www.google.com/maps/dir/?api=1&destination=${encodedLocation}" target="_blank" style="color: #000; text-decoration: underline;">${location}</a>`;
     } else {
       modalLocation.innerHTML = '';
     }
 
     const websiteElem = document.getElementById('modal-website');
-    if (website) {
-      websiteElem.innerHTML = `🔗 <a href="${website}" target="_blank" style="color: #000; text-decoration: underline;">${website}</a>`;
-    } else {
-      websiteElem.innerHTML = '';
-    }
+    websiteElem.innerHTML = website
+      ? `🔗 <a href="${website}" target="_blank" style="color: #000; text-decoration: underline;">${website}</a>`
+      : '';
 
     document.getElementById('event-modal').style.display = 'block';
   });
 
   return card;
 }
-
-
-
-
-
-
-
-
-

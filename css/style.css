@@ -346,7 +346,6 @@ nav a:hover,
     padding-right: 0.5rem;     
   }
 
-
 .events-container {
     padding: 1rem;
     display: grid;
@@ -355,19 +354,31 @@ nav a:hover,
 }
 
 .event-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 1.5rem;
-    background-color: white;
-    color: #333;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: white;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  height: 100%;
 }
+
+.event-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .event-card:hover {
     transform: translateY(-5px);
 }
-  
+
 .event-datetime {
     font-size: 0.9rem;
     font-family: 'Aktiv Grotesk RG', sans-serif;
@@ -387,7 +398,7 @@ nav a:hover,
     display: inline;
     letter-spacing: .05rem;
   }
-  
+
   .event-title {
     font-family: 'Aktiv Grotesk SB', sans-serif;
     font-size: 1.5rem;
@@ -539,74 +550,6 @@ nav a:hover,
   }
   
   .form-button:hover {
-    background-color: #2c5a70;
-  }
-  
-/* email signup */
-.events-layout {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-    padding: 1rem;
-  }
-  
-  .events-main {
-    flex: 3;
-  }
-  
-  .events-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  
-  .email-signup {
-    flex: 1;
-    max-width: 300px;
-    background-color: #f5f5f5;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  
-  .email-signup h2 {
-    font-family: 'Aktiv Grotesk SB', sans-serif;
-    font-size: 1.10rem;
-    color: #3E748E;
-    margin-bottom: 0.5rem;
-  }
-  
-  .email-signup p {
-    font-family: 'Aktiv Grotesk RG', sans-serif;
-    font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-  
-  .signup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .signup-form input {
-    padding: 0.75rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Aktiv Grotesk RG', sans-serif;
-  }
-  
-  .signup-form button {
-    padding: 0.75rem;
-    background-color: #3E748E;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Aktiv Grotesk SB', sans-serif;
-    cursor: pointer;
-  }
-  
-  .signup-form button:hover {
     background-color: #2c5a70;
   }
   
