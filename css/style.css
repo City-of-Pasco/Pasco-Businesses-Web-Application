@@ -220,50 +220,23 @@ nav a:hover,
 
 /* Contact Container Styles */
 .contact-container-full {
-    display: flex;
-    width: 100%;
-    background: #3E748E;
-    color: white;
-    padding: 20px 0;
-  }
-  
-  .contact-logo-section {
-    flex: 0 0 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-  }
-  
-  .contact-logo {
-    max-height: 100px;
-    max-width: 100%;
-  }
-  
-  .contact-details {
-    flex: 1;
-    display: flex;
-    padding: 0 20px;
-    border-left: 1px solid rgba(255,255,255,0.2);
-  }
-  
-  .contact-info, .quick-links {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  background: #3E748E;
+  color: white;
+}
+
+.quick-links {
     flex: 1;
     padding: 0 20px;
   }
   
-  .contact-info h3, .quick-links h3 {
+.quick-links h3 {
     font-family: 'Aktiv Grotesk SB', sans-serif;
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 1.2rem;
-  }
-  
-  .contact-info p {
-    font-family:'Aktiv Grotesk RG', sans-serif;;
-    margin: 8px 0;
-    line-height: 1.5;
-    letter-spacing: .1rem;
   }
   
   .quick-links ul {
@@ -658,6 +631,11 @@ nav a:hover,
 
 .business-card .read-more:hover {
   text-decoration: underline;
+}
+
+/* map page */
+#map {
+  height: 500px;
 }
 
 
