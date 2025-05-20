@@ -79,6 +79,14 @@ nav {
   gap: 2rem;
 }
 
+.nav-divider {
+  height: 24px;
+  width: 1px;
+  background-color: white;
+  opacity: 0.6;
+  margin: 0 1rem;
+}
+
 /* Main nav links */
 nav a,
 .dropdown-link {
