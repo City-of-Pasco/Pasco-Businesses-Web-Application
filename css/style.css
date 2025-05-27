@@ -65,6 +65,10 @@ body {
   padding-top: .5rem;
 }
 
+.homepage {
+  text-align: center;
+}
+
 
 header {
   background-color: #3E748E;
@@ -687,6 +691,12 @@ nav .dropdown {
 
 /* --- MOBILE --- */
 @media (max-width: 768px) {
+
+  /* homepage */
+  .homepage {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
 
   /* navbar */
   nav {
