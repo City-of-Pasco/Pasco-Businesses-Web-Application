@@ -3,7 +3,8 @@ let allFeatures = [];
 document.addEventListener('DOMContentLoaded', function () {
   const SURVEY_LAYER_URL =
     'https://services1.arcgis.com/mBduYxVcr3cUuRe8/arcgis/rest/services/survey123_f44001fc67e242ee84ee0bb029a4011a/FeatureServer/0';
-    const QUERY_URL = `${SURVEY_LAYER_URL}/query?where=verify='yes'&outFields=OBJECTID,event_title,event_description,event_date,end_event_date,start_time,end_time,event_location,websiteadditional_links&f=geojson`;
+    const QUERY_URL = `${SURVEY_LAYER_URL}/query?where=verify='yes'&outFields=OBJECTID,event_title,event_description,event_date,end_event_date,start_time,end_time,event_location,websiteadditional_links,business_name&f=geojson`;
+
 
 
   fetch(QUERY_URL)
@@ -106,7 +107,8 @@ function applyDateSort() {
       props.event_title,
       props.event_description,
       props.event_location,
-      props.websiteadditional_links
+      props.websiteadditional_links,
+      props.business_name
     );        
     container.appendChild(card);
   });
@@ -115,7 +117,7 @@ function applyDateSort() {
 
 
 // Create event card
-function createEventCard(startDateStr, endDateStr, startTime, endTime, title, description, location, website) {
+function createEventCard(startDateStr, endDateStr, startTime, endTime, title, description, location, website, businessName) {
   const card = document.createElement('div');
   card.className = 'event-card';
   card.dataset.saved = 'false';
@@ -147,6 +149,7 @@ function createEventCard(startDateStr, endDateStr, startTime, endTime, title, de
 
   card.innerHTML = `
     <h3 class="event-title">${title}</h3>
+    <p class="event-business-name">${businessName || 'Unknown Business'}</p>
     <div class="event-datetime">
       ${dateString} <span class="dot-separator">•</span> ${timeString}
     </div>
