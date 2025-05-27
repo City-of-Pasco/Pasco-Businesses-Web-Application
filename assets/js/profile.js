@@ -4,32 +4,32 @@ const bizData = {
   "andys-north": {
     name: "Andy's North",
     image: "assets/images/Andys North.jpg",
-    location: "123 Main St, Pasco, WA",
+    location: "3321 W Court St, Pasco, WA 99301",
     description: "Local favorite serving comfort food.",
-    phone: "(509) 555-1234",
-    hours: "8 AM – 8 PM",
-    website: "https://andysnorth.com",
-    coordinates: [-119.093, 46.239]
+    phone: "(509) 545-0152",
+    hours: "7 AM – 8 PM",
+    website: "https://www.andysnorthpasco.com",
+    coordinates: [-119.11586, 46.23885]
   },
   "el-charrito": {
     name: "El Charrito Mexican Restaurant",
     image: "assets/images/el charrito.jpg",
-    location: "456 Fiesta Ln, Pasco, WA",
+    location: "130 N 10th Ave, Pasco, WA 99301-5428",
     description: "Authentic Mexican cuisine and margaritas.",
-    phone: "(509) 555-5678",
-    hours: "10 AM – 9 PM",
-    website: "https://elcharritopasco.com",
-    coordinates: [-119.095, 46.235]
+    phone: "(509) 544-9141",
+    hours: "9 AM – 7 PM",
+    website: "https://www.restaurantji.com/wa/pasco/el-charrito-/",
+    coordinates: [-119.10052, 46.23934]
   },
   "fiesta": {
     name: "Fiesta Mexican Restaurant",
     image: "assets/images/fiesta mexican restaurant .jpg",
-    location: "789 Sunset Blvd, Pasco, WA",
+    location: "5210 N. RD 68 Suite L, Pasco, WA 99301",
     description: "Great place for tacos and nightlife.",
-    phone: "(509) 555-7890",
-    hours: "11 AM – 11 PM",
-    website: "https://fiestapasco.com",
-    coordinates: [-119.097, 46.237]
+    phone: "(509) 543-6884",
+    hours: "11 AM – 9 PM",
+    website: "https://www.fiestarestaurant.com",
+    coordinates: [-119.14266, 46.26494]
   }
 };
 
@@ -58,9 +58,9 @@ if (data) {
     .setPopup(new mapboxgl.Popup().setText(data.name))
     .addTo(map);
 
-  // Clickable redirection to Google Maps
+  // Clickable redirection to Google Maps using business address
   document.getElementById('biz-map').addEventListener('click', () => {
-    const googleUrl = `https://www.google.com/maps/search/?api=1&query=${data.coordinates[1]},${data.coordinates[0]}`;
+    const googleUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}`;
     window.open(googleUrl, '_blank');
   });
 }
