@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Helper functions
+
 function to12Hour(timeStr) {
   if (!timeStr) return '';
   const [hour, minute] = timeStr.split(':');
@@ -174,8 +174,9 @@ function createEventCard(startDateStr, endDateStr, startTime, endTime, title, de
   // Modal behavior
   card.addEventListener('click', function (e) {
     if (e.target.closest('.save-btn')) return;
-
+  
     document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-business-name').textContent = businessName || 'Unknown Business'; // <-- add this
     document.getElementById('modal-datetime').innerHTML = `
       <span class="modal-date">${dateString}</span>
       <span class="dot-separator">•</span>
