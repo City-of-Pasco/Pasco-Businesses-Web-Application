@@ -134,19 +134,24 @@
 
 
       });
+
+      // Mobile dropdown click toggle
+      document.querySelectorAll('.dropdown-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+            const parent = this.closest('.dropdown');
+    
+            document.querySelectorAll('.dropdown').forEach(drop => {
+              if (drop !== parent) drop.classList.remove('open');
+            });
+    
+            parent.classList.toggle('open');
+          }
+        });
+      });
     </script>
   </div>
-
-  <!-- <footer class="contact-container-full">
-    <div class="quick-links" style="padding-left: 2rem;">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="https://www.pasco-wa.gov/1012/Departments">City Department Directory</a></li>
-        <li><a href="https://www.pasco-wa.gov/CivicAlerts.aspx?CID=16">Public Notices</a></li>
-        <li><a href="https://www.pasco-wa.gov/313/Emergency-PreparednessPublic-Safety">Emergency Preparedness & Contacts</a></li>
-      </ul>
-    </div>
-  </footer> -->
 </body>
 
 </html>

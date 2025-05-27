@@ -84,6 +84,23 @@
 
   <!-- JS FILE -->
   <script src="assets/js/profile.js"></script>
+  <script>
+    // Mobile dropdown click toggle
+    document.querySelectorAll('.dropdown-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          const parent = this.closest('.dropdown');
+  
+          document.querySelectorAll('.dropdown').forEach(drop => {
+            if (drop !== parent) drop.classList.remove('open');
+          });
+  
+          parent.classList.toggle('open');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 
