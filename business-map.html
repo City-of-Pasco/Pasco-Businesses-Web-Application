@@ -18,7 +18,7 @@
       <nav>
         <a href="index.html">Home</a>
         <span class="nav-divider"></span>
-      
+
         <div class="dropdown">
           <a href="#" class="dropdown-link">Business Directory</a>
           <div class="dropdown-content">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <span class="nav-divider"></span>
-      
+
         <div class="dropdown">
           <span class="dropdown-toggle">
             <a href="#" class="dropdown-link">Events</a>
@@ -38,16 +38,23 @@
           </div>
         </div>
         <span class="nav-divider"></span>
-      
+
         <a href="business-app.html">Business Application</a>
-      </nav>   
-  </header>
+      </nav>
+    </header>
 
     <div id="map"></div>
 
+    <div class='map-overlay' id='business-info'>
+      <div id='info-panel'>
+        <h3 id="default">Hover over a business to see details.</h3>
+      </div>
+    </div>
+
+
     <script>
       mapboxgl.accessToken =
-      'pk.eyJ1IjoiYXplZW0yNCIsImEiOiJjbG9vdTBocXgwMXQ2MmtuMDNxdnZ6dmE4In0.rdbtfSrMciEPOWUtqb0oVA';
+        'pk.eyJ1IjoiYXplZW0yNCIsImEiOiJjbG9vdTBocXgwMXQ2MmtuMDNxdnZ6dmE4In0.rdbtfSrMciEPOWUtqb0oVA';
 
       const map = new mapboxgl.Map({
         container: 'map',
@@ -78,7 +85,7 @@
         // add businesses
         map.addSource('downtownBusinesses', {
           type: 'geojson',
-          data: 'REPLACED'
+          data: 'https://services5.arcgis.com/Mrjxd32WJFxUIHrM/arcgis/rest/services/survey123_b5fd0097dc654afba11078360758e9e8_results/FeatureServer/0/query?f=geojson&where=verification%3D%27Verified%27&outFields=*'
         });
 
         map.addLayer({
@@ -92,6 +99,39 @@
             'circle-stroke-color': '#ffffff'
           }
         });
+
+        let hoveredBusinessId = null;
+
+        map.on('mousemove', 'downtownBusinesses-circle', (e) => {
+          const features = e.features;
+
+          if (!features || features.length === 0) return;
+
+          const biz = features[0];
+          const name = biz.properties['business_name'] || 'N/A';
+          const address = biz.properties['business_location'] || 'N/A';
+          const hours = biz.properties['business_operation_hours'] || 'N/A';
+          const phone = biz.properties['business_phone_number'] || 'N/A';
+
+          if (biz.id !== hoveredBusinessId) {
+            hoveredBusinessId = biz.id;
+
+            const infoPanel = document.getElementById('info-panel');
+            infoPanel.innerHTML = `
+              <h3>${name}</h3>
+              <p><strong>Address:</strong> ${address}</p>
+              <p><strong>Hours:</strong> ${hours}</p>
+              <p><strong>Phone:</strong> ${phone}</p>
+            `;
+          }
+        });
+
+        map.on('mouseleave', 'downtownBusinesses-circle', () => {
+          const infoPanel = document.getElementById('info-panel');
+          infoPanel.innerHTML = `<h3 id="default">Hover over a business to see details.</h3>`;
+          hoveredBusinessId = null;
+        });
+
 
       });
     </script>

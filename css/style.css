@@ -641,6 +641,19 @@ nav .dropdown {
   height: 100%;
 }
 
+.map-overlay {
+  position: absolute;
+  color: black;
+  top: 120px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
