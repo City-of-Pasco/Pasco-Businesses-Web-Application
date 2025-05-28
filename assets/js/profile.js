@@ -40,7 +40,7 @@ const data = bizData[bizKey];
 if (data) {
   document.getElementById('biz-name').textContent = data.name;
   document.getElementById('biz-img').src = data.image;
-  document.getElementById('biz-location').textContent = data.location;
+  document.getElementById('biz-location').innerHTML = `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}" target="_blank">${data.location}</a>`;
   document.getElementById('biz-description').textContent = data.description;
   document.getElementById('biz-phone').textContent = data.phone;
   document.getElementById('biz-hours').textContent = data.hours;
