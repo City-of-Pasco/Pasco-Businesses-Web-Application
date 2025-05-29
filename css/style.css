@@ -168,16 +168,24 @@ nav .dropdown {
 
 /* main video on the homepage */
 .hero {
-  width: 100%;
   position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  background: black; 
 }
 
 .hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 500px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
+
+
 
 .carousel {
   position: relative;
