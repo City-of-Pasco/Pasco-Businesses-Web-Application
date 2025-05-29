@@ -40,44 +40,15 @@
   </header>
 
     <main>
-      <section class="directory-grid">
-        <div class="business-card">
-          <img src="assets/images/Andys North.jpg" alt="Andy's North" />
-          <h3>Andy's North</h3>
-          <a href="business-profile.html?business=andys-north" class="read-more">READ MORE <span class="arrow">›</span></a>
-
-        </div>
-
+      <section class="directory-grid" id="business-list">
         <div class="business-card">
           <img src="assets/images/el charrito.jpg" alt="El Charrito Mexican Restaurant" />
           <h3>El Charrito Mexican Restaurant</h3>
           <a href="business-profile.html?business=el-charrito" class="read-more">READ MORE <span class="arrow">›</span></a>
         </div>
-
-        <div class="business-card">
-          <img src="assets/images/fiesta mexican restaurant .jpg" alt="Fiesta Mexican Restaurant" />
-          <h3>Fiesta Mexican Restaurant</h3>
-          <a href="business-profile.html?business=fiesta" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
-
-        <div class="business-card">
-          <img src="assets/images/image 17.jpg" alt="Placeholder Business 1" />
-          <h3>Placeholder Business 1</h3>
-          <a href="business-profile.html?business=placeholder1" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
-
-        <div class="business-card">
-          <img src="assets/images/image 18.jpg" alt="Placeholder Business 2" />
-          <h3>Placeholder Business 2</h3>
-          <a href="business-profile.html?business=placeholder2" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
-
-        <div class="business-card">
-          <img src="assets/images/image 19.jpg" alt="Placeholder Business 3" />
-          <h3>Placeholder Business 3</h3>
-          <a href="business-profile.html?business=placeholder3" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
+        <!-- Business cards will be injected here dynamically -->
       </section>
+
     </main>
   </div>
 
@@ -109,5 +80,49 @@
       });
     });
   </script>
+
+  <script>
+    const businessListEl = document.getElementById('business-list');
+
+    const baseUrl = "https://services5.arcgis.com/Mrjxd32WJFxUIHrM/arcgis/rest/services/survey123_b5fd0097dc654afba11078360758e9e8_results/FeatureServer/0";
+
+    async function getAttachmentUrl(objectId) {
+      const response = await fetch(`${baseUrl}/${objectId}/attachments?f=json`);
+      const data = await response.json();
+      if (data.attachmentInfos && data.attachmentInfos.length > 0) {
+        // Use the first attachment
+        return `${baseUrl}/${objectId}/attachments/${data.attachmentInfos[0].id}`;
+      }
+      // Fallback image
+      return "assets/images/default-placeholder.jpg";
+    }
+
+    fetch(`${baseUrl}/query?f=geojson&where=verification%3D%27Verified%27&outFields=*`)
+      .then(res => res.json())
+      .then(async data => {
+        for (const feature of data.features) {
+          const props = feature.properties;
+          const name = props.business_name || "Unnamed Business";
+          const objectId = props.objectid;
+          const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+
+          const imageUrl = await getAttachmentUrl(objectId);
+
+          const card = document.createElement("div");
+          card.className = "business-card";
+          card.innerHTML = `
+            <img src="${imageUrl}" alt="${name}" />
+            <h3>${name}</h3>
+            <a href="business-profile.html" class="read-more">READ MORE <span class="arrow">›</span></a>
+          `;
+          businessListEl.appendChild(card);
+        }
+      })
+      .catch(err => {
+        businessListEl.innerHTML = "<p>Failed to load businesses.</p>";
+        console.error("Error loading business data:", err);
+      });
+  </script>
+
 </body>
 </html>
