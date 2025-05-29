@@ -6,50 +6,64 @@
   <title>Pasco Business</title>
   <meta name="author" content="Kristen, Armaan, Cesar, & Shira" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .hero {
+      position: relative;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div class="wrapper">
     <header>
-        <nav>
-          <a href="index.html">Home</a>
-          <span class="nav-divider"></span>
-        
-          <div class="dropdown">
-            <a href="#" class="dropdown-link">Business Directory</a>
-            <div class="dropdown-content">
-              <a href="business-direct.html">Explore Businesses <span class="arrow">›</span></a>
-              <a href="business-map.html">Business Map <span class="arrow">›</span></a>
-            </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <span class="nav-divider"></span>
+
+        <div class="dropdown">
+          <a href="#" class="dropdown-link">Business Directory</a>
+          <div class="dropdown-content">
+            <a href="business-direct.html">Explore Businesses <span class="arrow">›</span></a>
+            <a href="business-map.html">Business Map <span class="arrow">›</span></a>
           </div>
-          <span class="nav-divider"></span>
-        
-          <div class="dropdown">
-            <span class="dropdown-toggle">
-              <a href="#" class="dropdown-link">Events</a>
-            </span>
-            <div class="dropdown-content">
-              <a href="events.html">Event Calendar <span class="arrow">›</span></a>
-              <!-- <a href="events-kitchen.html">Rent a Kitchen Space <span class="arrow">›</span></a> -->
-            </div>
+        </div>
+        <span class="nav-divider"></span>
+
+        <div class="dropdown">
+          <span class="dropdown-toggle">
+            <a href="#" class="dropdown-link">Events</a>
+          </span>
+          <div class="dropdown-content">
+            <a href="events.html">Event Calendar <span class="arrow">›</span></a>
+            <!-- <a href="events-kitchen.html">Rent a Kitchen Space <span class="arrow">›</span></a> -->
           </div>
-          <span class="nav-divider"></span>
-        
-          <a href="business-app.html">Business Application</a>
-        </nav>   
+        </div>
+        <span class="nav-divider"></span>
+
+        <a href="business-app.html">Business Application</a>
+      </nav>
     </header>
 
     <main>
       <div class="hero">
-        <img 
-          src="assets/images/DowntownPasco.jpg" 
-          alt="City of Pasco" 
-          class="hero-image" 
-        />
+        <video class="hero-video" autoplay muted loop playsinline>
+          <source src="assets/images/cityofp.mp4" type="video/mp4"/>
+          Your browser does not support the video tag.
+        </video>
       </div>
 
       <section class="introduction">
         <h1 class="homepage">Welcome to Downtown City of Pasco!</h1>
-          <p class="homepage">
+        <p class="homepage">
           Discover the heart of Pasco—where local businesses, culture, and community come together. 
           <br>This interactive platform allows you to explore Pasco’s unique downtown offerings, discover upcoming events, and share your own business or event with the community.
         </p>
@@ -104,17 +118,17 @@
     window.addEventListener("resize", updateCarousel);
     window.addEventListener("load", updateCarousel);
 
-        // Mobile dropdown click toggle
-        document.querySelectorAll('.dropdown-link').forEach(link => {
+    // Mobile dropdown click toggle
+    document.querySelectorAll('.dropdown-link').forEach(link => {
       link.addEventListener('click', function (e) {
         if (window.innerWidth <= 768) {
           e.preventDefault();
           const parent = this.closest('.dropdown');
-  
+
           document.querySelectorAll('.dropdown').forEach(drop => {
             if (drop !== parent) drop.classList.remove('open');
           });
-  
+
           parent.classList.toggle('open');
         }
       });

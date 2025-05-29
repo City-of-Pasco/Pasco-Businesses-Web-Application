@@ -166,13 +166,13 @@ nav .dropdown {
 }
 
 
-/* main image on the homepage */
+/* main video on the homepage */
 .hero {
   width: 100%;
   position: relative;
 }
 
-.hero-image {
+.hero-video {
   width: 100%;
   height: 500px;
   object-fit: cover;
