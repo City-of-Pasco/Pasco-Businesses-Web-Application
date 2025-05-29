@@ -41,11 +41,6 @@
 
     <main>
       <section class="directory-grid" id="business-list">
-        <div class="business-card">
-          <img src="assets/images/el charrito.jpg" alt="El Charrito Mexican Restaurant" />
-          <h3>El Charrito Mexican Restaurant</h3>
-          <a href="business-profile.html?business=el-charrito" class="read-more">READ MORE <span class="arrow">›</span></a>
-        </div>
         <!-- Business cards will be injected here dynamically -->
       </section>
 
@@ -113,7 +108,7 @@
           card.innerHTML = `
             <img src="${imageUrl}" alt="${name}" />
             <h3>${name}</h3>
-            <a href="business-profile.html" class="read-more">READ MORE <span class="arrow">›</span></a>
+            <a href="business-profile.html?business=${slug}" class="read-more">READ MORE <span class="arrow">›</span></a>
           `;
           businessListEl.appendChild(card);
         }

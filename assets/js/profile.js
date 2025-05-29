@@ -1,67 +1,65 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2VzYXJ2MyIsImEiOiJjbTd4d2cwN2wwM201MmtvY2tjNjBzdWZjIn0.RSGwfOSbzdhFZU_9zQnc1A';
 
-const bizData = {
-  "andys-north": {
-    name: "Andy's North",
-    image: "assets/images/Andys North.jpg",
-    location: "3321 W Court St, Pasco, WA 99301",
-    description: "Local favorite serving comfort food.",
-    phone: "(509) 545-0152",
-    hours: "7 AM – 8 PM",
-    website: "https://www.andysnorthpasco.com",
-    coordinates: [-119.11586, 46.23885]
-  },
-  "el-charrito": {
-    name: "El Charrito Mexican Restaurant",
-    image: "assets/images/el charrito.jpg",
-    location: "130 N 10th Ave, Pasco, WA 99301-5428",
-    description: "Authentic Mexican cuisine and margaritas.",
-    phone: "(509) 544-9141",
-    hours: "9 AM – 7 PM",
-    website: "https://www.restaurantji.com/wa/pasco/el-charrito-/",
-    coordinates: [-119.10052, 46.23934]
-  },
-  "fiesta": {
-    name: "Fiesta Mexican Restaurant",
-    image: "assets/images/fiesta mexican restaurant .jpg",
-    location: "5210 N. RD 68 Suite L, Pasco, WA 99301",
-    description: "Great place for tacos and nightlife.",
-    phone: "(509) 543-6884",
-    hours: "11 AM – 9 PM",
-    website: "https://www.fiestarestaurant.com",
-    coordinates: [-119.14266, 46.26494]
-  }
-};
+const baseUrl = "https://services5.arcgis.com/Mrjxd32WJFxUIHrM/arcgis/rest/services/survey123_b5fd0097dc654afba11078360758e9e8_results/FeatureServer/0";
 
+// Get slug from URL
 const urlParams = new URLSearchParams(window.location.search);
-const bizKey = urlParams.get('business');
-const data = bizData[bizKey];
+const slug = urlParams.get('business');
 
-if (data) {
-  document.getElementById('biz-name').textContent = data.name;
-  document.getElementById('biz-img').src = data.image;
-  document.getElementById('biz-location').innerHTML = `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}" target="_blank">${data.location}</a>`;
-  document.getElementById('biz-description').textContent = data.description;
-  document.getElementById('biz-phone').textContent = data.phone;
-  document.getElementById('biz-hours').textContent = data.hours;
-  document.getElementById('biz-website').innerHTML = `<a href="${data.website}" target="_blank">${data.website}</a>`;
-
-  const map = new mapboxgl.Map({
-    container: 'biz-map',
-    style: 'mapbox://styles/mapbox/streets-v12',
-    center: data.coordinates,
-    zoom: 15
-  });
-
-  new mapboxgl.Marker()
-    .setLngLat(data.coordinates)
-    .setPopup(new mapboxgl.Popup().setText(data.name))
-    .addTo(map);
-
-  // Clickable redirection to Google Maps using business address
-  document.getElementById('biz-map').addEventListener('click', () => {
-    const googleUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.location)}`;
-    window.open(googleUrl, '_blank');
-  });
+// Get attachment image
+async function getAttachmentUrl(objectId) {
+  const res = await fetch(`${baseUrl}/${objectId}/attachments?f=json`);
+  const data = await res.json();
+  if (data.attachmentInfos && data.attachmentInfos.length > 0) {
+    return `${baseUrl}/${objectId}/attachments/${data.attachmentInfos[0].id}`;
+  }
+  return "assets/images/default-placeholder.jpg";
 }
 
+// Convert business name to slug
+function createSlug(name) {
+  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+}
+
+// Fetch and display business
+fetch(`${baseUrl}/query?f=geojson&where=verification%3D%27Verified%27&outFields=*`)
+  .then(res => res.json())
+  .then(async data => {
+    const feature = data.features.find(f => createSlug(f.properties.business_name) === slug);
+
+    if (!feature) {
+      document.querySelector('main').innerHTML = "<p>Business not found.</p>";
+      return;
+    }
+
+    const props = feature.properties;
+    const coords = feature.geometry.coordinates;
+    const objectId = props.objectid;
+
+    const imgUrl = await getAttachmentUrl(objectId);
+
+    // Populate HTML fields
+    document.getElementById('biz-name').textContent = props.business_name || "Unnamed Business";
+    document.getElementById('biz-img').src = imgUrl;
+    document.getElementById('biz-location').textContent = `${props.business_location || ''}, ${props.city || ''}`;
+    document.getElementById('biz-description').textContent = props.business_overview || "No description provided.";
+    document.getElementById('biz-phone').textContent = props.business_phone_number || "No phone number.";
+    document.getElementById('biz-hours').textContent = props.business_operation_hours || "No hours listed.";
+    document.getElementById('biz-website').innerHTML = props.business_website
+      ? `<a href="${props.website}" target="_blank">${props.business_website}</a>`
+      : "No website listed.";
+
+    // Initialize Map
+    const map = new mapboxgl.Map({
+      container: 'biz-map',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: coords,
+      zoom: 14
+    });
+
+    new mapboxgl.Marker().setLngLat(coords).addTo(map);
+  })
+  .catch(err => {
+    console.error("Error loading business profile:", err);
+    document.querySelector('main').innerHTML = "<p>Failed to load business data.</p>";
+  });
