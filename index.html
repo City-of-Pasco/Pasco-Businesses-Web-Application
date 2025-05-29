@@ -6,21 +6,6 @@
   <title>Pasco Business</title>
   <meta name="author" content="Kristen, Armaan, Cesar, & Shira" />
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    .hero {
-      position: relative;
-      width: 100%;
-      height: auto;
-      overflow: hidden;
-    }
-
-    .hero-video {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      display: block;
-    }
-  </style>
 </head>
 <body>
   <div class="wrapper">
@@ -52,15 +37,16 @@
         <a href="business-app.html">Business Application</a>
       </nav>
     </header>
-
-    <main>
-      <div class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-          <source src="assets/images/cityofp.mp4" type="video/mp4"/>
+    <div class="hero">
+      <div class="hero-video-wrapper">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+          <source src="assets/video/cityofp.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
-
+      <div class="hero-overlay"></div>
+    </div>    
+    <main>
       <section class="introduction">
         <h1 class="homepage">Welcome to Downtown City of Pasco!</h1>
         <p class="homepage">
