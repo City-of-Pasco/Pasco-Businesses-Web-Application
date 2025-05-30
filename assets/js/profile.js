@@ -41,7 +41,8 @@ fetch(`${baseUrl}/query?f=geojson&where=verification%3D%27Verified%27&outFields=
     // Populate HTML fields
     document.getElementById('biz-name').textContent = props.business_name || "Unnamed Business";
     document.getElementById('biz-img').src = imgUrl;
-    document.getElementById('biz-location').textContent = `${props.business_location || ''}, ${props.city || ''}`;
+    const fullAddress = `${props.business_location || ''}, ${props.city || ''}`;
+    document.getElementById('biz-location').innerHTML = `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}" target="_blank" rel="noopener noreferrer">${fullAddress}</a>`;
     document.getElementById('biz-description').textContent = props.business_overview || "No description provided.";
     document.getElementById('biz-phone').textContent = props.business_phone_number || "No phone number.";
     document.getElementById('biz-hours').textContent = props.business_operation_hours || "No hours listed.";
@@ -58,6 +59,12 @@ fetch(`${baseUrl}/query?f=geojson&where=verification%3D%27Verified%27&outFields=
     });
 
     new mapboxgl.Marker().setLngLat(coords).addTo(map);
+    document.getElementById('biz-map').addEventListener('click', () => {
+      const [lng, lat] = coords;
+      const googleUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      window.open(googleUrl, '_blank');
+    });
+
   })
   .catch(err => {
     console.error("Error loading business profile:", err);
