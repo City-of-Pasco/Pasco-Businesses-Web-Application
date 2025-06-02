@@ -1,3 +1,5 @@
+// Author: Cesar
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2VzYXJ2MyIsImEiOiJjbTd4d2cwN2wwM201MmtvY2tjNjBzdWZjIn0.RSGwfOSbzdhFZU_9zQnc1A';
 
 const baseUrl = "https://services5.arcgis.com/Mrjxd32WJFxUIHrM/arcgis/rest/services/survey123_b5fd0097dc654afba11078360758e9e8_results/FeatureServer/0";

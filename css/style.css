@@ -868,3 +868,74 @@ nav .dropdown {
     text-align: center;
   }
 }
+
+/* === Mobile Styles for Cesar's Pages Only === */
+@media screen and (max-width: 768px) {
+  .profile-page main section {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .profile-page .biz-img-wrapper {
+    min-width: 100%;
+    margin-left: 0;
+  }
+
+  .profile-page #biz-img {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .profile-page #biz-map {
+    height: 250px;
+  }
+
+  .profile-page #biz-name {
+    font-size: 1.8rem;
+  }
+
+  .directory-page .directory-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .directory-page .directory-card img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  .directory-page .directory-info {
+    padding-left: 0;
+  }
+}
+
+/* === Mobile fix for profile page image === */
+.profile-page .biz-img-wrapper {
+  flex: 1;
+  min-width: 600px;
+  margin-left: 0;
+}
+
+.profile-page .responsive-biz-img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-page .biz-img-wrapper {
+    min-width: 100%;
+    margin-left: 0;
+  }
+
+  .profile-page .responsive-biz-img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+  }
+}
