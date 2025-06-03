@@ -867,10 +867,8 @@ nav .dropdown {
     width: 100%;
     text-align: center;
   }
-}
 
-/* === Mobile Styles for Cesar's Pages Only === */
-@media screen and (max-width: 768px) {
+  /* profile page */
   .profile-page main section {
     flex-direction: column;
     gap: 1.5rem;
@@ -911,22 +909,8 @@ nav .dropdown {
   .directory-page .directory-info {
     padding-left: 0;
   }
-}
 
-/* === Mobile fix for profile page image === */
-.profile-page .biz-img-wrapper {
-  flex: 1;
-  min-width: 600px;
-  margin-left: 0;
-}
-
-.profile-page .responsive-biz-img {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-}
-
-@media screen and (max-width: 768px) {
+  /* profile page image */
   .profile-page .biz-img-wrapper {
     min-width: 100%;
     margin-left: 0;
