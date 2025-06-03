@@ -712,6 +712,11 @@ nav .dropdown {
     padding: 1.5rem 1rem;
   }
 
+  .map-overlay {
+    top: 360px;
+    right: 15px;
+  }
+
   /* navbar */
   nav {
     flex-direction: column;
