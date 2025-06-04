@@ -928,3 +928,37 @@ nav .dropdown {
     object-fit: cover;
   }
 }
+
+/* === FIX DESKTOP LAYOUT FOR PROFILE PAGE === */
+@media (min-width: 769px) {
+  .profile-page main section:first-of-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 2.5rem;
+  }
+
+  .profile-page .biz-img-wrapper {
+    flex: 1;
+    max-width: 45%;
+  }
+
+  .profile-page .responsive-biz-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .profile-page main section:first-of-type > div:last-of-type {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .profile-page #biz-map {
+    height: 400px;
+    width: 100%;
+  }
+}
