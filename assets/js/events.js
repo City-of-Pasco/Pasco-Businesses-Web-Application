@@ -154,22 +154,27 @@ function createEventCard(startDateStr, endDateStr, startTime, endTime, title, de
       ${dateString} <span class="dot-separator">•</span> ${timeString}
     </div>
     <p class="event-description">${shortDescription}</p>
-    <div class="event-actions">
-      <button class="save-btn"><i class="far fa-bookmark"></i> Save</button>
-    </div>
   `;
 
+  // save button: to be added back onto card, add the line of code below under this line 
+  // ' <p class="event-description">${shortDescription}</p>' and uncomment it to bring back feature.
+    /*
+  <div class="event-actions">
+    <button class="save-btn"><i class="far fa-bookmark"></i> Save</button>
+  </div>
+  */
+
   // Save toggle
-  const saveButton = card.querySelector('.save-btn');
-  saveButton.addEventListener('click', function (e) {
-    e.stopPropagation();
-    const isSaved = card.dataset.saved === 'true';
-    card.dataset.saved = isSaved ? 'false' : 'true';
-    saveButton.classList.toggle('saved');
-    saveButton.innerHTML = isSaved
-      ? '<i class="far fa-bookmark"></i> Save'
-      : '<i class="fas fa-bookmark"></i> Saved';
-  });
+  // const saveButton = card.querySelector('.save-btn');
+  // saveButton.addEventListener('click', function (e) {
+  //   e.stopPropagation();
+  //   const isSaved = card.dataset.saved === 'true';
+  //   card.dataset.saved = isSaved ? 'false' : 'true';
+  //   saveButton.classList.toggle('saved');
+  //   saveButton.innerHTML = isSaved
+  //     ? '<i class="far fa-bookmark"></i> Save'
+  //     : '<i class="fas fa-bookmark"></i> Saved';
+  // });
 
   // Modal behavior
   card.addEventListener('click', function (e) {

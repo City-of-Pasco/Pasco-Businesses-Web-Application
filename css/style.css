@@ -421,11 +421,11 @@ nav .dropdown {
 }
 
 /* Save button icons */
-.save-btn i {
+/* .save-btn i {
   margin-right: 0.5rem;
-}
+} */
 
-.save-btn.saved i {
+/* .save-btn.saved i {
   color: #d4af37;
 }
 
@@ -439,11 +439,11 @@ nav .dropdown {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
+} */
 
-.save-btn.saved {
+/* .save-btn.saved {
   color: #d4af37;
-}
+} */
 
 /* pop-up event */
 .modal {
@@ -810,9 +810,9 @@ nav .dropdown {
     font-size: 0.95rem;
   }
 
-  .save-btn {
+  /* .save-btn {
     font-size: 0.85rem;
-  }
+  } */
 
   /* Modal */
   .modal-content {
