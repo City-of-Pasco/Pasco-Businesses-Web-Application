@@ -56,11 +56,13 @@
       mapboxgl.accessToken =
         'pk.eyJ1IjoiYXplZW0yNCIsImEiOiJjbG9vdTBocXgwMXQ2MmtuMDNxdnZ6dmE4In0.rdbtfSrMciEPOWUtqb0oVA';
 
-      const map = new mapboxgl.Map({
+        const isMobile = window.innerWidth <= 768;
+      
+        const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/azeem24/cmamtp71d016o01rfgf9z4yfk',
         center: [-119.094, 46.2340],
-        zoom: 14.2,
+        zoom: isMobile ? 12.5 : 14.2,
         interactive: true
       });
 
